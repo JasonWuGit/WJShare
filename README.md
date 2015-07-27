@@ -18,8 +18,12 @@
     class func connectWithWechatAppID(appid:String) //链接微信的appID
     
 运行后在控制台得到提示:
+
+![image](https://github.com/JasonWuGit/WJShare/blob/master/Image/schemeURL.png)
 #### 添加Scheme URL
 将从控制台得到的URL添加到项目的info.plist中
+
+![image](https://github.com/JasonWuGit/WJShare/blob/master/Image/plist.png)
 #### 分享
 构造Message
 
