@@ -1,8 +1,8 @@
 //
-//  ShareManager.swift
-//  KuaiZhanManager
+//  WJShareManager.swift
+//  WJShareDemo
 //
-//  Created by JasonWu on 7/16/15.
+//  Created by JasonWu on 7/29/15.
 //  Copyright (c) 2015 JasonWu. All rights reserved.
 //
 
@@ -13,32 +13,33 @@ enum SMPboardEncoding {
     case SMPboardEncodingPropertyListSerialization
 }
 
-enum ShareToType {
+enum WJShareToType {
     case ShareToQQ
     case ShareToQQZone
 }
 
-enum MessageType {
+enum WJMessageType {
     case Text
     case Image
     case Link
 }
 
-struct ShareMessage {
-    var messageType:MessageType
+struct WJShareMessage {
+    var messageType:WJMessageType
     var messageTitle:String //if messageType=Text then title is text what you want to share
     var messageImage:NSData?
     var messageDesc:String?
     var messageLink:String?//if messageType = Link then link is must not empty
     
-    init(messageType type:MessageType, title:String) {
+    init(messageType type:WJMessageType, title:String) {
         messageType = type
         messageTitle = title
     }
     
 }
 
-class ShareManager {
+
+class WJShareManager {
     
     static let appName: String = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
     static var callBackDic = Dictionary< String, (Dictionary<String,String>, NSError?)->Void >()
@@ -49,23 +50,23 @@ class ShareManager {
     // MARK: - Connect
     
     class func connectWithQQAppID(appid:String) {
-        appIDDic[ShareManagerQQ.callBackKey] = appid
+        appIDDic[WJShareManagerQQ.callBackKey] = appid
         let scheme = String(format: "QQ%02llx",("1104618501" as NSString).longLongValue).uppercaseString
-        callbackSchemeURLDic[ShareManagerQQ.callBackKey] = scheme
+        callbackSchemeURLDic[WJShareManagerQQ.callBackKey] = scheme
         
         NSLog("请添加 \(scheme) 到scheme URL 中")
     }
     
     class func connectWithWeiboAppID(appid:String) {
-        appIDDic[ShareManagerSina.callbackKey] = appid
-        callbackSchemeURLDic[ShareManagerQQ.callBackKey] = "wb\(appid)"
+        appIDDic[WJShareManagerSina.callbackKey] = appid
+        callbackSchemeURLDic[WJShareManagerQQ.callBackKey] = "wb\(appid)"
         
         NSLog("请添加 wb\(appid) 到scheme URL 中")
     }
     
     class func connectWithWechatAppID(appid:String) {
-        appIDDic[ShareManagerWeChat.callbackKey] = appid
-        callbackSchemeURLDic[ShareManagerWeChat.callbackKey] = appid
+        appIDDic[WJShareManagerWeChat.callbackKey] = appid
+        callbackSchemeURLDic[WJShareManagerWeChat.callbackKey] = appid
         
         NSLog("请添加 \(appid) 到scheme URL 中")
     }
@@ -85,11 +86,11 @@ class ShareManager {
         if let appid = appIDDic[key] {
             
             if let handler = callback {
-                ShareManager.callBackDic[key] = handler
+                WJShareManager.callBackDic[key] = handler
             } else {
-                ShareManager.callBackDic[key] = nil
+                WJShareManager.callBackDic[key] = nil
             }
-
+            
             return true
         }
         
@@ -111,12 +112,12 @@ class ShareManager {
     }
     
     class func base64AndUrlEncode(input:String)->String {
-        let str = ShareManager.base64Encode(input)
+        let str = WJShareManager.base64Encode(input)
         return str!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
     }
     
     class func urlDecode(input:String)->String {
-       return input.stringByReplacingOccurrencesOfString("+", withString: " ", options: NSStringCompareOptions.LiteralSearch, range: nil).stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        return input.stringByReplacingOccurrencesOfString("+", withString: " ", options: NSStringCompareOptions.LiteralSearch, range: nil).stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
     }
     
     //MARK: - PastBoard
@@ -163,7 +164,7 @@ class ShareManager {
         
         let closure = { (url:NSURL) -> (dic:Dictionary<String,String>, error:NSError?) in
             
-            let dic = ShareManager.analysisUrl(url)
+            let dic = WJShareManager.analysisUrl(url)
             if let errorStr = dic["error"] {
                 let error = NSError(domain: errorStr, code: -1, userInfo: nil)
                 
@@ -175,22 +176,22 @@ class ShareManager {
         
         
         if url.scheme!.hasPrefix("QQ") {
-            if let callBack = ShareManager.callBackDic[ShareManagerQQ.callBackKey] {
+            if let callBack = WJShareManager.callBackDic[WJShareManagerQQ.callBackKey] {
                 let result = closure(url)
                 callBack(result.dic, result.error)
             }
             
         } else if url.scheme!.hasPrefix("wx") {
-            if let callBack = ShareManager.callBackDic[ShareManagerWeChat.callbackKey] {
+            if let callBack = WJShareManager.callBackDic[WJShareManagerWeChat.callbackKey] {
                 let result = closure(url)
                 callBack(result.dic, result.error)
             }
         } else if url.scheme!.hasPrefix("wb") {
-            if let callBack = ShareManager.callBackDic[ShareManagerSina.callbackKey] {
+            if let callBack = WJShareManager.callBackDic[WJShareManagerSina.callbackKey] {
                 let result = closure(url)
                 callBack(result.dic, result.error)
             }
-
+            
         }
         
     }
@@ -198,5 +199,6 @@ class ShareManager {
     //MARK: - ShareMessage
     
     
+
    
 }

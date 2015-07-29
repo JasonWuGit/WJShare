@@ -1,25 +1,26 @@
 //
-//  ShareManagerWeChat.swift
-//  KuaiZhanManager
+//  WJShareManagerWeChat.swift
+//  WJShareDemo
 //
-//  Created by JasonWu on 7/21/15.
+//  Created by JasonWu on 7/29/15.
 //  Copyright (c) 2015 JasonWu. All rights reserved.
 //
 
 import UIKit
 
-class ShareManagerWeChat{
+class WJShareManagerWeChat {
+    
     
     static var callbackKey = "WeChat"
     
     func isWeChatInstalled() -> Bool {
         let url = NSURL(string:"weixin://")
-        return ShareManager.isInstalledURL(url!)
+        return WJShareManager.isInstalledURL(url!)
     }
     
     
     //0---session   1---friends   2---favorite
-    func genShareUrlTo(to:Int, message:ShareMessage) -> String {
+    func genShareUrlTo(to:Int, message:WJShareMessage) -> String {
         
         var dic : Dictionary<String, AnyObject> = [
             "result" : "1",
@@ -29,18 +30,18 @@ class ShareManagerWeChat{
             "command" : "1010"
         ]
         
-        if message.messageType == MessageType.Text { //text
+        if message.messageType == WJMessageType.Text { //text
             
             dic["command"] = "1020"
             dic["title"] = message.messageTitle
             
-        } else if message.messageType == MessageType.Image { //image
+        } else if message.messageType == WJMessageType.Image { //image
             
             dic["fileData"] = message.messageImage!
             dic["thumbData"] = message.messageImage!
             dic["objectType"] = "2"
             
-        } else if message.messageType == MessageType.Link {
+        } else if message.messageType == WJMessageType.Link {
             
             dic["description"] = message.messageDesc!
             dic["mediaUrl"] = message.messageLink!
@@ -49,7 +50,7 @@ class ShareManagerWeChat{
             dic["title"] = message.messageTitle
             
         }
-        let callbackURL:String = ShareManager.callbackSchemeURLDic[ShareManagerWeChat.callbackKey]!
+        let callbackURL:String = WJShareManager.callbackSchemeURLDic[WJShareManagerWeChat.callbackKey]!
         let data = NSPropertyListSerialization.dataWithPropertyList([ callbackURL :dic], format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: nil)
         
         UIPasteboard.generalPasteboard().setData(data!, forPasteboardType: "content")
@@ -59,13 +60,13 @@ class ShareManagerWeChat{
         return url
     }
     
-    func shareToWeChatFriendsWithMessage(message:ShareMessage, callback:((Dictionary<String,String> , NSError?)->Void)?) -> Bool {
+    func shareToWeChatFriendsWithMessage(message:WJShareMessage, callback:((Dictionary<String,String> , NSError?)->Void)?) -> Bool {
         
-        let isOk = ShareManager.prepareOpenWithCallbackKey(ShareManagerWeChat.callbackKey, callback: callback)
+        let isOk = WJShareManager.prepareOpenWithCallbackKey(WJShareManagerWeChat.callbackKey, callback: callback)
         if isWeChatInstalled() && isOk {
             
             let shareUrl = genShareUrlTo(1, message: message)
-            ShareManager.openURL(NSURL(string: shareUrl)!)
+            WJShareManager.openURL(NSURL(string: shareUrl)!)
             
             return true
         }
@@ -73,5 +74,6 @@ class ShareManagerWeChat{
         return false
     }
     
+
    
 }

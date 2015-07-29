@@ -1,39 +1,39 @@
 //
-//  ShareManagerSina.swift
-//  KuaiZhanManager
+//  WJShareManagerSina.swift
+//  WJShareDemo
 //
-//  Created by JasonWu on 7/21/15.
+//  Created by JasonWu on 7/29/15.
 //  Copyright (c) 2015 JasonWu. All rights reserved.
 //
 
 import UIKit
 
-class ShareManagerSina {
+class WJShareManagerSina {
     
     static let callbackKey = "weibo"
     
     func isWeiBoInstalled() -> Bool {
         let url = NSURL(string: "weibosdk://request")
-        return ShareManager.isInstalledURL(url!)
+        return WJShareManager.isInstalledURL(url!)
     }
     
     
-    func shareToWeiboWithMessage(message:ShareMessage, callback:((Dictionary<String,String> , NSError?)->Void)?) -> Bool {
+    func shareToWeiboWithMessage(message:WJShareMessage, callback:((Dictionary<String,String> , NSError?)->Void)?) -> Bool {
         
-        let isOK = ShareManager.prepareOpenWithCallbackKey(ShareManagerSina.callbackKey, callback: callback)
+        let isOK = WJShareManager.prepareOpenWithCallbackKey(WJShareManagerSina.callbackKey, callback: callback)
         if isWeiBoInstalled() && isOK {
             
             //diction isn't anyobject so we use nsdictionary
             var dic:NSDictionary = [:]
             
-            if message.messageType == MessageType.Text {
+            if message.messageType == WJMessageType.Text {
                 
                 dic = [
                     "__class" : "WBMessageObject",
                     "text" : message.messageTitle
                 ]
                 
-            } else if message.messageType == MessageType.Image {
+            } else if message.messageType == WJMessageType.Image {
                 
                 dic = [
                     "__class" : "WBMessageObject",
@@ -41,7 +41,7 @@ class ShareManagerSina {
                     "imageObject" : NSDictionary(object: message.messageImage!, forKey: "imageData")
                 ]
                 
-            } else if message.messageType == MessageType.Link {
+            } else if message.messageType == WJMessageType.Link {
                 
                 var mediaObj:NSDictionary = NSDictionary(dictionary: [
                     "__class" : "WBWebpageObject" ,
@@ -77,8 +77,8 @@ class ShareManagerSina {
                 ["userInfo" : NSKeyedArchiver.archivedDataWithRootObject([:])],
                 
                 ["app" : NSKeyedArchiver.archivedDataWithRootObject([
-                    "appKey" : ShareManager.appIDDic[ShareManagerSina.callbackKey]!,
-                    "bundleID" : ShareManager.bundleID
+                    "appKey" : WJShareManager.appIDDic[WJShareManagerSina.callbackKey]!,
+                    "bundleID" : WJShareManager.bundleID
                     ])]
                 
             ]
@@ -87,11 +87,13 @@ class ShareManagerSina {
             let urlStr = "weibosdk://request?id=\(uuid)&sdkversion=003013000"
             
             
-            ShareManager.openURL(NSURL(string: urlStr)!)
+            WJShareManager.openURL(NSURL(string: urlStr)!)
             return true
         }
         
         return false
     }
+    
+
    
 }

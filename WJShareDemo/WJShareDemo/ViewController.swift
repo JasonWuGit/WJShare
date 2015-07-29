@@ -10,11 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var sm:ShareMessage
+    var sm:WJShareMessage
     
     init() {
         
-        sm = ShareMessage(messageType: MessageType.Link, title: "测试")
+        sm = WJShareMessage(messageType: WJMessageType.Link, title: "测试")
         sm.messageImage = NSData(data:  UIImagePNGRepresentation(UIImage(named: "logo-2")))
         sm.messageDesc = "image Description"
         sm.messageLink = "http://www.baidu.com"
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     required init(coder aDecoder: NSCoder) {
         
-        sm = ShareMessage(messageType: MessageType.Link, title: "测试")
+        sm = WJShareMessage(messageType: WJMessageType.Link, title: "测试")
         sm.messageImage = NSData(data:  UIImagePNGRepresentation(UIImage(named: "logo-2")))
         sm.messageDesc = "image Description"
         sm.messageLink = "http://www.baidu.com"
@@ -38,9 +38,9 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         //在这里写入申请号的app id
-        ShareManager.connectWithWeiboAppID("2537818686")
-        ShareManager.connectWithWechatAppID("wxca350ac7c9b54c50")
-        ShareManager.connectWithQQAppID("1104618501")
+        WJShareManager.connectWithWeiboAppID("2537818686")
+        WJShareManager.connectWithWechatAppID("wxca350ac7c9b54c50")
+        WJShareManager.connectWithQQAppID("1104618501")
 
         
     }
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     
     @IBAction func QQZoneShareTouch(sender: AnyObject) {
         
-        let shareQQ = ShareManagerQQ()
+        let shareQQ = WJShareManagerQQ()
         shareQQ.shareToQQZoneWithMessage(sm) { (dic :Dictionary<String, String>, error :NSError?) -> Void in
             
             NSLog("\(dic)")
@@ -62,7 +62,7 @@ class ViewController: UIViewController {
 
     @IBAction func QQFriendShareTouch(sender: AnyObject) {
         
-        let shareQQ = ShareManagerQQ()
+        let shareQQ = WJShareManagerQQ()
         shareQQ.shareToQQFriendWithMessage(sm) { (dic :Dictionary<String, String>, error :NSError?) -> Void in
             
             NSLog("\(dic)")
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
     }
     @IBAction func wechatShareTouch(sender: AnyObject) {
         
-        let shareWeChat = ShareManagerWeChat()
+        let shareWeChat = WJShareManagerWeChat()
         shareWeChat.shareToWeChatFriendsWithMessage(sm) { (dic :Dictionary<String, String>, error :NSError?) -> Void in
             NSLog("\(dic)")
         }
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
     }
     @IBAction func weiboShareTouch(sender: AnyObject) {
         
-        let shareSina = ShareManagerSina()
+        let shareSina = WJShareManagerSina()
         shareSina.shareToWeiboWithMessage(sm) { (dic :Dictionary<String, String>, error :NSError?) -> Void in
             NSLog("\(dic)")
         }

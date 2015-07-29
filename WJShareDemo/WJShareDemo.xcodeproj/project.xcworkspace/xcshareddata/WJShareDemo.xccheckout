@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B5787373-DEC0-4E3C-94DC-02D241F7E51E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>WJShareDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>92FF76E5A618DDCC9F47723303C6290A49844167</key>
 		<string>https://github.com/JasonWuGit/WJShare.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>WJShareDemo/WJShareDemo.xcodeproj/project.xcworkspace</string>
+	<string>WJShareDemo/WJShareDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>92FF76E5A618DDCC9F47723303C6290A49844167</key>

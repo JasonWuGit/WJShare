@@ -13,7 +13,10 @@
 		96EC92AC1B6617ED00618314 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96EC92AB1B6617ED00618314 /* Images.xcassets */; };
 		96EC92AF1B6617ED00618314 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96EC92AD1B6617ED00618314 /* LaunchScreen.xib */; };
 		96EC92BB1B6617ED00618314 /* WJShareDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EC92BA1B6617ED00618314 /* WJShareDemoTests.swift */; };
-		96EC92C51B66181300618314 /* WJShare in Resources */ = {isa = PBXBuildFile; fileRef = 96EC92C41B66181300618314 /* WJShare */; };
+		96EC92C81B6872CA00618314 /* WJShareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EC92C71B6872CA00618314 /* WJShareManager.swift */; };
+		96EC92CA1B6873D200618314 /* WJShareManagerQQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EC92C91B6873D200618314 /* WJShareManagerQQ.swift */; };
+		96EC92CC1B68750200618314 /* WJShareManagerSina.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EC92CB1B68750200618314 /* WJShareManagerSina.swift */; };
+		96EC92CE1B6875C800618314 /* WJShareManagerWeChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EC92CD1B6875C800618314 /* WJShareManagerWeChat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,10 @@
 		96EC92B41B6617ED00618314 /* WJShareDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WJShareDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96EC92B91B6617ED00618314 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96EC92BA1B6617ED00618314 /* WJShareDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WJShareDemoTests.swift; sourceTree = "<group>"; };
-		96EC92C41B66181300618314 /* WJShare */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WJShare; sourceTree = "<group>"; };
+		96EC92C71B6872CA00618314 /* WJShareManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJShareManager.swift; sourceTree = "<group>"; };
+		96EC92C91B6873D200618314 /* WJShareManagerQQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJShareManagerQQ.swift; sourceTree = "<group>"; };
+		96EC92CB1B68750200618314 /* WJShareManagerSina.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJShareManagerSina.swift; sourceTree = "<group>"; };
+		96EC92CD1B6875C800618314 /* WJShareManagerWeChat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WJShareManagerWeChat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +85,7 @@
 		96EC92A11B6617ED00618314 /* WJShareDemo */ = {
 			isa = PBXGroup;
 			children = (
-				96EC92C41B66181300618314 /* WJShare */,
+				96EC92C61B6872AD00618314 /* WJShare */,
 				96EC92A41B6617ED00618314 /* AppDelegate.swift */,
 				96EC92A61B6617ED00618314 /* ViewController.swift */,
 				96EC92A81B6617ED00618314 /* Main.storyboard */,
@@ -113,6 +119,17 @@
 				96EC92B91B6617ED00618314 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		96EC92C61B6872AD00618314 /* WJShare */ = {
+			isa = PBXGroup;
+			children = (
+				96EC92C71B6872CA00618314 /* WJShareManager.swift */,
+				96EC92C91B6873D200618314 /* WJShareManagerQQ.swift */,
+				96EC92CB1B68750200618314 /* WJShareManagerSina.swift */,
+				96EC92CD1B6875C800618314 /* WJShareManagerWeChat.swift */,
+			);
+			name = WJShare;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,7 +215,6 @@
 				96EC92AA1B6617ED00618314 /* Main.storyboard in Resources */,
 				96EC92AF1B6617ED00618314 /* LaunchScreen.xib in Resources */,
 				96EC92AC1B6617ED00618314 /* Images.xcassets in Resources */,
-				96EC92C51B66181300618314 /* WJShare in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +232,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96EC92CE1B6875C800618314 /* WJShareManagerWeChat.swift in Sources */,
+				96EC92CC1B68750200618314 /* WJShareManagerSina.swift in Sources */,
 				96EC92A71B6617ED00618314 /* ViewController.swift in Sources */,
+				96EC92C81B6872CA00618314 /* WJShareManager.swift in Sources */,
+				96EC92CA1B6873D200618314 /* WJShareManagerQQ.swift in Sources */,
 				96EC92A51B6617ED00618314 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,6 +435,7 @@
 				96EC92C01B6617ED00618314 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96EC92C11B6617ED00618314 /* Build configuration list for PBXNativeTarget "WJShareDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +444,7 @@
 				96EC92C31B6617ED00618314 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
