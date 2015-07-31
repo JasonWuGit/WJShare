@@ -144,9 +144,8 @@ class WJShareManager {
     class func analysisUrl(url:NSURL) -> Dictionary<String, String> {
         
         var returnedDic = Dictionary<String, String>()
-        let strings = url.query?.componentsSeparatedByString("&")
         
-        if let strs = strings {
+        if let strs = url.query?.componentsSeparatedByString("&") {
             for string in strs {
                 
                 let range = string.rangeOfString("=")
@@ -195,10 +194,5 @@ class WJShareManager {
         }
         
     }
-    
-    //MARK: - ShareMessage
-    
-    
-
    
 }

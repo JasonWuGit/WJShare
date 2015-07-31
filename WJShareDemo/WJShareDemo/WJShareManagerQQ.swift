@@ -24,19 +24,29 @@ class WJShareManagerQQ {
     
     func genShareURLTo(to:Int ,Message message:WJShareMessage) -> String {
         
-        var shareUrl = "mqqapi://share/to_fri?thirdAppDisplayName=" + WJShareManager.base64Encode(WJShareManager.appName)!
-        shareUrl += "&version=1"
-        shareUrl += "&cflag=" + "\(to)" //0代表分享到好友 /1代表分享到空间
-        shareUrl += "&callback_type=scheme"
-        shareUrl += "&generalpastboard=1"
-        shareUrl += "&callback_name=\(WJShareManager.callbackSchemeURLDic[WJShareManagerQQ.callBackKey]!)"//String(format: "QQ%02llx",("1104618501" as NSString).longLongValue) QQ check this as appID
-        shareUrl += "&src_type=app"
-        shareUrl += "&shareType=0"
         
-        if message.messageType == WJMessageType.Text { //just share text
-            shareUrl += "&file_type=text"
-            shareUrl += "&file_data=" + WJShareManager.base64Encode(message.messageTitle)!
-        } else if message.messageType == WJMessageType.Image { //share with image
+        func genBasicShareURL(to:Int) -> String {
+            
+            var basicURL = "mqqapi://share/to_fri?thirdAppDisplayName=" + WJShareManager.base64Encode(WJShareManager.appName)!
+            basicURL += "&version=1"
+            basicURL += "&cflag=" + "\(to)" //0代表分享到好友 /1代表分享到空间
+            basicURL += "&callback_type=scheme"
+            basicURL += "&generalpastboard=1"
+            basicURL += "&callback_name=\(WJShareManager.callbackSchemeURLDic[WJShareManagerQQ.callBackKey]!)"//QQ check this as appID
+            basicURL += "&src_type=app"
+            basicURL += "&shareType=0"
+
+            return basicURL
+        }
+        
+        func genTextShareURL(text:String) -> String {
+            
+            let textShareURL = "&file_type=text&file_data=" + WJShareManager.base64Encode(message.messageTitle)!
+            
+            return textShareURL
+        }
+        
+        func genImageShareURL(message:WJShareMessage) -> String {
             
             let dataDic = [
                 "file_data":message.messageImage!,
@@ -45,24 +55,37 @@ class WJShareManagerQQ {
             
             WJShareManager.setGeneralPasteboardWithKey("com.tencent.mqq.api.apiLargeData", value: dataDic, encoding: SMPboardEncoding.SMPboardEncodingKeyedArchiver)
             
-            shareUrl += "&file_type=img"
-            shareUrl += "&title=" + WJShareManager.base64Encode(message.messageTitle)!
-            shareUrl += "&objectlocation=pasteboard"
-            shareUrl += "&description=" + WJShareManager.base64Encode(message.messageDesc!)!
+            let imageShareURL = "&file_type=img&title=" + WJShareManager.base64Encode(message.messageTitle)! + "&objectlocation=pasteboard&description=" + WJShareManager.base64Encode(message.messageDesc!)!
             
-        } else if message.messageType == WJMessageType.Link { //share with link
+            return imageShareURL
+        }
+        
+        func genLinkShareURL(message:WJShareMessage) -> String {
             
             let dataDic = ["previewimagedata" : message.messageImage!]
             WJShareManager.setGeneralPasteboardWithKey("com.tencent.mqq.api.apiLargeData", value: dataDic, encoding: SMPboardEncoding.SMPboardEncodingKeyedArchiver)
-            shareUrl += "&file_type=news"
-            shareUrl += "&title=" + WJShareManager.base64AndUrlEncode(message.messageTitle)
-            shareUrl += "&url=" + WJShareManager.base64AndUrlEncode(message.messageLink!)
-            shareUrl += "&description=" + WJShareManager.base64AndUrlEncode(message.messageDesc!)
-            shareUrl += "&objectlocation=pasteboard"
             
+            var linkShareURL = "&file_type=news&title=" + WJShareManager.base64AndUrlEncode(message.messageTitle)
+            linkShareURL += "&url=" + WJShareManager.base64AndUrlEncode(message.messageLink!)
+            linkShareURL += "&description=" + WJShareManager.base64AndUrlEncode(message.messageDesc!)
+            linkShareURL += "&objectlocation=pasteboard"
+            
+            return linkShareURL
         }
         
-        return shareUrl
+        var shareURL = genBasicShareURL(to)
+        
+        switch (message.messageType) {
+            
+        case .Text:
+            shareURL += genTextShareURL(message.messageTitle)
+        case .Image:
+            shareURL += genImageShareURL(message)
+        case .Link:
+            shareURL += genLinkShareURL(message)
+        }
+        
+        return shareURL
     }
     
     func shareToQQZoneWithMessage(message:WJShareMessage, callBack:((Dictionary<String,String> , NSError?)->Void)?) -> Bool {
